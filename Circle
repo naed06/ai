@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Canvas Touch</title>
+  </head>
+  <body>
+    <canvas id="canvas" width="300" height="150"></canvas>
+    <script>
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      let x = canvas.width / 2;
+      let y = canvas.height / 2;
+      let isMovingLeft = false;
+      let isMovingRight = false;
+
+      function handleTouchStart(event) {
+        if (event.touches[0].clientX < canvas.width / 2) {
+          isMovingLeft = true;
+        } else {
+          isMovingRight = true;
+        }
+      }
+
+      function handleTouchEnd(event) {
+        isMovingLeft = false;
+        isMovingRight = false;
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.beginPath();
+        ctx.arc(x, y, 25, 0, 2 * Math.PI);
+        ctx.fill();
+        if (isMovingLeft) {
+          x -= 5;
+        } else if (isMovingRight) {
+          x += 5;
+        }
+        if (x < 25) {
+          x = 25
